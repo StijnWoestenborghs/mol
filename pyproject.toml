@@ -1,0 +1,9 @@
+[project]
+name = "mol"
+version = "0.0.1"
+description = ""
+authors = []
+readme = "README.md"
+requires-python = "==3.11.*"
+
+dependencies = []
