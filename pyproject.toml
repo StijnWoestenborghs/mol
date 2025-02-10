@@ -1,6 +1,6 @@
 [project]
-name = "mol"
-version = "0.0.1"
+name = "testmol"
+version = "0.0.3"
 description = ""
 authors = []
 readme = "README.md"

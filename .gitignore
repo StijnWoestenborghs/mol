@@ -13,3 +13,5 @@ __pycache__/
 pytest.xml
 coverage.xml
 pytest-coverage.txt
+
+*.egg-info
