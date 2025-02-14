@@ -1,5 +1,6 @@
 import ctypes
 import os
+import site
 import platform
 from typing import List
 
@@ -16,7 +17,9 @@ elif system == "Linux" and arch == "aarch64":
 else:
     raise RuntimeError(f"Unsupported system-architecture combination: {system}-{arch}")
 
-lib = ctypes.CDLL(os.path.join(os.path.dirname(os.path.realpath(__file__)), lib_name))
+# Get the site-packages directory
+site_packages_dir = site.getsitepackages()[0]
+lib = ctypes.CDLL(os.path.join(site_packages_dir, "mol", lib_name))
 lib.add_from_c.argtypes = [
     ctypes.c_float,
     ctypes.c_float,
