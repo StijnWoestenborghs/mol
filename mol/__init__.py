@@ -1,4 +1,1 @@
-from .some import add_from_c
-
-def add_from_python(a: float, b: float) -> float:
-    return a + b
+from .python.fibonacci_py import fibonacci_py

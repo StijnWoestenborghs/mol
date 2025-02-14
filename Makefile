@@ -5,25 +5,16 @@ ifneq (,$(wildcard .env))
 	include .env
 endif
 
-setuppy:
-	python -m venv .venv
-	. .venv/bin/activate
-	pip install .
-
-buildm:
-	rm -rf build
-	meson setup build
-	meson compile -C build
-	meson install -C build
-
 
 clean:
 	rm -rf build
 	rm -rf .venv
+	rm -rf dist
+	uv clean
 
 
-build:
-	make -C mol/some
+# build:
+# 	make -C mol/some
 
 
 publish:

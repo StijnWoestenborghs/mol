@@ -1,1 +1,0 @@
-from .somelib import add_from_c
