@@ -12,10 +12,5 @@ clean:
 	rm -rf dist
 	uv clean
 
-
-# build:
-# 	make -C mol/some
-
-
 publish:
 	$(PYPI_TOKEN)

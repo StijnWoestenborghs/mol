@@ -1,2 +1,0 @@
-include mol/some/*.so
-include mol/some/*.dll
