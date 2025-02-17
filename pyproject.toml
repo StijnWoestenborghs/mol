@@ -6,22 +6,8 @@ authors = []
 readme = "README.md"
 requires-python = "==3.11.*"
 
-dependencies = ["fibonacci_cpp", "fibonacci_cy"]
-
-[tool.uv.sources]
-fibonacci_cpp = { path = "packages/fibonacci_cpp" }
-fibonacci_cy = { path = "packages/fibonacci_cy" }
+dependencies = []
 
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[tool.hatch.metadata]
-allow-direct-references = true
-
-[tool.hatch.build.targets.wheel]
-packages = [
-  "testmol",
-  "packages/fibonacci_cpp",
-  "packages/fibonacci_cy",
-]
+requires = ['meson', 'meson-python', 'cython']
+build-backend = 'mesonpy'

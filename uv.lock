@@ -2,26 +2,6 @@ version = 1
 requires-python = "==3.11.*"
 
 [[package]]
-name = "fibonacci-cpp"
-version = "0.0.3"
-source = { directory = "packages/fibonacci_cpp" }
-
-[[package]]
-name = "fibonacci-cy"
-version = "0.0.3"
-source = { directory = "packages/fibonacci_cy" }
-
-[[package]]
 name = "testmol"
 version = "0.0.3"
 source = { editable = "." }
-dependencies = [
-    { name = "fibonacci-cpp" },
-    { name = "fibonacci-cy" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "fibonacci-cpp", directory = "packages/fibonacci_cpp" },
-    { name = "fibonacci-cy", directory = "packages/fibonacci_cy" },
-]

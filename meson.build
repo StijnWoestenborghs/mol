@@ -1,6 +1,6 @@
 project(
-    'fibonacci_cpp',
-    'cpp', # language(s)
+    'testmol',
+    'cpp', 'cython', # language(s)
     version: '0.1',
     default_options: [
         'cpp_std=c++17',
@@ -10,9 +10,16 @@ project(
 
 py = import('python').find_installation(pure: false)
 
-# C++
+# Cython
+py.extension_module(
+    'fibonacci_cy',
+    sources: ['testmol/fibonacci_cy.pyx'],
+    install: true,
+)
+
+# Cpp
 py.extension_module(
     'fibonacci_cpp',
-    sources: ['fibonacci_cpp.cpp'],
+    sources: ['testmol/fibonacci_cpp.cpp'],
     install: true,
 )
