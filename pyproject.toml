@@ -6,8 +6,15 @@ authors = []
 readme = "README.md"
 requires-python = "==3.11.*"
 
-dependencies = []
+dependencies = ["fibonacci_cpp", "fibonacci_cy"]
+
+[tool.uv.sources]
+fibonacci_cpp = { workspace = true }
+fibonacci_cy = { workspace = true }
+
+[tool.uv.workspace]
+members = ["packages/*"]
 
 [build-system]
-requires = ['meson', 'meson-python', 'cython']
-build-backend = 'mesonpy'
+requires = ["hatchling"]
+build-backend = "hatchling.build"

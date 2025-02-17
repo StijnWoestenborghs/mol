@@ -10,6 +10,7 @@ clean:
 	rm -rf build
 	rm -rf .venv
 	rm -rf dist
+	rm -rf packages/*/build
 	uv clean
 
 publish:

@@ -1,0 +1,9 @@
+[project]
+name = "fibonacci_cy"
+version = "0.0.3"
+description = ""
+authors = []
+
+[build-system]
+requires = ['meson', 'meson-python', 'cython']
+build-backend = 'mesonpy'
