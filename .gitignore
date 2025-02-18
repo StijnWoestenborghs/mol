@@ -15,6 +15,5 @@ coverage.xml
 pytest-coverage.txt
 
 *.egg-info
-test.py
 
 .cibuildwheel
