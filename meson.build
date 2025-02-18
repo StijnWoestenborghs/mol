@@ -23,3 +23,10 @@ py.extension_module(
     sources: ['testmol/fibonacci_cpp.cpp'],
     install: true,
 )
+
+# Python
+py.install_sources(
+    ['testmol/__init__.py', 'testmol/fibonacci_py.py'],
+    pure: false,
+    preserve_path: true
+)
