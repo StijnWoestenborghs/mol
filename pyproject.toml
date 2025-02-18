@@ -1,6 +1,6 @@
 [project]
 name = "testmol"
-version = "0.0.3"
+version = "0.0.5"
 description = ""
 authors = []
 readme = "README.md"
@@ -11,3 +11,9 @@ dependencies = []
 [build-system]
 requires = ['meson', 'meson-python', 'cython']
 build-backend = 'mesonpy'
+
+[tool.meson-python.args]
+setup = [
+  '--default-library=static',
+  '-Doptimization=3',
+]

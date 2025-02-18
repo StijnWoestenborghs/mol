@@ -1,25 +1,32 @@
 project(
     'testmol',
-    'cython', 'cpp', 'c', # language(s)
-    version: '0.1',
+    'cpp', 'cython', # language(s)
     default_options: [
         'cpp_std=c++17',
         'buildtype=release',
     ]
 )
 
-py3 = import('python').find_installation(pure: false)
+py = import('python').find_installation(pure: false)
 
-# Cython
-py3.extension_module(
-    'fibonacci_cy',
-    sources: ['testmol/pyx/fibonacci_cy.pyx'],
-    install: true,
+# Python
+install_subdir(
+    'testmol',
+    install_dir: py.get_install_dir(),
 )
 
-
-py3.extension_module(
-    'fibonacci_cpp',
-    sources: ['testmol/cpp/fibonacci_cpp.cpp'],
+# Cython
+py.extension_module(
+    'fibonacci_cy',
+    sources: ['testmol/fibonacci_cy.pyx'],
     install: true,
+    install_dir: py.get_install_dir() / 'testmol',
+)
+
+# Cpp
+py.extension_module(
+    'fibonacci_cpp',
+    sources: ['testmol/fibonacci_cpp.cpp'],
+    install: true,
+    install_dir: py.get_install_dir() / 'testmol',
 )
