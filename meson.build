@@ -26,8 +26,13 @@ py.extension_module(
 )
 
 # Python
-py.install_sources(
-    meson.project_source_root() / 'testmol',
-    pure: false,
-    preserve_path: true
+# py.install_sources(
+#     meson.project_source_root() / 'testmol',
+#     pure: false,
+#     preserve_path: true
+# )
+
+install_subdir(
+    'testmol',
+    install_dir: py.get_install_dir(),
 )
