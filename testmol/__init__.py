@@ -1,4 +1,4 @@
-import fibonacci_cpp, fibonacci_cy
+from testmol import fibonacci_cpp, fibonacci_cy
 from .fibonacci_py import fibonacci_py
 
 def fibonacci_cpp_from_py(a):
