@@ -19,11 +19,14 @@ publish:
 
 buildci:
 	# pip install cibuildwheel, or from a specific cibuildwheel image in a github workflow
+	# source: https://github.com/scipy/scipy/blob/main/.github/workflows/wheels.yml
 	# matrix 
 	# - host: [<runner>, <whl-target>, <arch>]
 	# [
 	#	[ubuntu-22.04, manylinux, x86_64],
+	#	[ubuntu-22.04, musllinux, x86_64],
 	#	[ubuntu-24.04-arm, manylinux, aarch64],
+	#	[ubuntu-24.04-arm, musllinux, aarch64],
 	# 	[macos-13, macosx, x86_64],
 	# 	[macos-14, macosx, arm64],
 	#	[windows-2019, win, AMD64],
