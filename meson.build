@@ -9,6 +9,12 @@ project(
 
 py = import('python').find_installation(pure: false)
 
+# Python
+install_subdir(
+    'testmol',
+    install_dir: py.get_install_dir(),
+)
+
 # Cython
 py.extension_module(
     'fibonacci_cy',
@@ -23,16 +29,4 @@ py.extension_module(
     sources: ['testmol/fibonacci_cpp.cpp'],
     install: true,
     install_dir: py.get_install_dir() / 'testmol',
-)
-
-# Python
-# py.install_sources(
-#     meson.project_source_root() / 'testmol',
-#     pure: false,
-#     preserve_path: true
-# )
-
-install_subdir(
-    'testmol',
-    install_dir: py.get_install_dir(),
 )
