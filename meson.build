@@ -27,7 +27,7 @@ py.extension_module(
 
 # Python
 py.install_sources(
-    ['testmol/__init__.py', 'testmol/fibonacci_py.py'],
+    meson.project_source_root() / 'testmol',
     pure: false,
     preserve_path: true
 )
