@@ -18,7 +18,7 @@ publish:
 
 
 buildci:
-	# pip install cibuildwheel twine
+	# pip install cibuildwheel, or from a specific cibuildwheel image in a github workflow
 	# matrix 
 	# - host: [<runner>, <whl-target>, <arch>]
 	# [
