@@ -90,6 +90,10 @@ jobs:
             with:
                 fetch-depth: 0
 
+          - uses: actions/setup-python@v5
+            with:
+                python-version: 3.11
+
           - name: Install project build system requirements (ninja)
             run: sudo apt-get update && sudo apt-get install -y ninja-build
             if: ${{ runner.os == 'Linux' }}
