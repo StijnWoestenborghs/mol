@@ -75,12 +75,11 @@ jobs:
                 python: [["cp311", "3.11"], ["cp312", "3.12"], ["cp313", "3.13"]]
                 # matrix.python[0] is used to specify the python versions made by cibuildwheel
     
-        # env:
-            # TODO: upload behaviour
-            # # upload to staging if it's a push to a maintenance branch and the last
-            # # commit message contains '[wheel build]'
-            # IS_PUSH: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/heads/maintenance') && contains(needs.get_commit_message.outputs.message, '1') }}
-            # IS_SCHEDULE_DISPATCH: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+        env:
+            # upload to dev if it's triggered by a push and a 'wheel build' commit message
+            # upload to nightly on schedule or workflow_dispatch
+            IS_PUSH: ${{ github.event_name == 'push' && contains(needs.get_commit_message.outputs.message, '1') }}
+            IS_SCHEDULE_DISPATCH: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
     
         steps:
           - name: Checkout
@@ -102,4 +101,60 @@ jobs:
                 name: ${{ matrix.python[0] }}-${{ matrix.buildplat[1] }}-${{ matrix.buildplat[2] }}
                 retention-days: 1
 
-        # TODO: upload wheels  (possibly based on IS_PUSH or IS_SCHEDULE_DISPATCH)
+          # TODO: upload wheels  (possibly based on IS_PUSH or IS_SCHEDULE_DISPATCH)
+          - name: Install uv
+            uses: astral-sh/setup-uv@v5
+
+          - name: Upload wheels
+            if: success()
+            env:
+                PYPI_UPLOAD_TOKEN: ${{ secrets.PYPI_TOKEN }}
+            # Inspired by numpy upload wheels
+            # https://github.com/numpy/numpy/blob/main/tools/wheels/upload_wheels.sh
+            run: |
+                set_upload_vars() {
+                    echo "IS_PUSH: $IS_PUSH"
+                    echo "IS_SCHEDULE_DISPATCH: $IS_SCHEDULE_DISPATCH"
+                    if [ "$IS_PUSH" = "true" ]; then
+                        echo push and tag event
+                        export UPLOAD_REGISTRY="dev"
+                        export TOKEN=$PYPI_UPLOAD_TOKEN
+                        export WHL_UPLOAD="true"
+                    elif [ "$IS_SCHEDULE_DISPATCH" = "true" ]; then
+                        echo scheduled or dispatched event
+                        export UPLOAD_REGISTRY="nightly"
+                        export TOKEN=$PYPI_UPLOAD_TOKEN
+                        export WHL_UPLOAD="true"
+                    else
+                        echo non-dispatch event
+                    fi
+                }
+                
+                set_upload_vars
+
+                upload_wheels() {
+                    echo ${PWD}
+                    if [[ ${WHL_UPLOAD} == true ]]; then
+                        if [ -z ${TOKEN} ]; then
+                            echo no token set, not uploading
+                        # sdists are located under dist folder
+                        if compgen -G "./dist/*.gz"; then
+                            echo "Found sdist"
+                            echo "Uploading sdist to ${UPLOAD_REGISTRY}"
+                            # anaconda -t ${TOKEN} upload --force -u ${ANACONDA_ORG} ./dist/*.gz
+                        elif compgen -G "./wheelhouse/*.whl"; then
+                            echo "Found wheel"
+                            # Force a replacement if the remote file already exists -
+                            # nightlies will not have the commit ID in the filename, so
+                            # are named the same (1.X.Y.dev0-<platform/interpreter-tags>)
+                            echo "Uploading wheel to ${UPLOAD_REGISTRY}"
+                            #anaconda -t ${TOKEN} upload --force -u ${ANACONDA_ORG} ./wheelhouse/*.whl
+                        else
+                            echo "Files do not exist"
+                            return 1
+                        fi
+                    fi
+                }
+
+                upload_wheels  
+                
