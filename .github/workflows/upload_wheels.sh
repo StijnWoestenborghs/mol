@@ -25,18 +25,13 @@ upload_wheels() {
         if [ -z ${TOKEN} ]; then
             echo no token set, not uploading
         else
-            # sdists are located under dist folder
-            if compgen -G "./dist/*.gz"; then
-                echo "Found sdist"
-                echo "Uploading sdist to ${UPLOAD_REGISTRY}"
-                # anaconda -t ${TOKEN} upload --force -u ${ANACONDA_ORG} ./dist/*.gz
-            elif compgen -G "./wheelhouse/*.whl"; then
+            if compgen -G "./wheelhouse/*.whl"; then
                 echo "Found wheel"
                 # Force a replacement if the remote file already exists -
                 # nightlies will not have the commit ID in the filename, so
                 # are named the same (1.X.Y.dev0-<platform/interpreter-tags>)
                 echo "Uploading wheel to ${UPLOAD_REGISTRY}"
-                #anaconda -t ${TOKEN} upload --force -u ${ANACONDA_ORG} ./wheelhouse/*.whl
+                uv publish --token ${TOKEN} upload ./wheelhouse/*.whl
             else
                 echo "Files do not exist"
                 return 1
