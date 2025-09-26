@@ -1,5 +1,5 @@
 import timeit
-from testmol import fibonacci_py, fibonacci_cpp_from_py, fibonacci_cy_from_py
+from modlib import fibonacci_py, fibonacci_cpp_from_py, fibonacci_cy_from_py
 
 
 def validate():

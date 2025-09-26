@@ -1,6 +1,6 @@
 [project]
-name = "testmol"
-version = "0.0.8"
+name = "modlib"
+version = "0.0.1"
 description = ""
 authors = []
 readme = "README.md"
